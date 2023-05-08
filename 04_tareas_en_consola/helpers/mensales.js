@@ -1,6 +1,5 @@
 const { resolve } = require('path');
 
-require('colors');
 
 const mostrarMenu = () => {
     return new Promise( resolve => {
