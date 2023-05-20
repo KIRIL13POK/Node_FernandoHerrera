@@ -1,7 +1,7 @@
 const Tarea = require('./Tarea');
 
-class Tareas {
-    
+class Tareas {  
+
     _listado = {}
 
     get listadoArr() {

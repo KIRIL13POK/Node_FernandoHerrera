@@ -1,6 +1,6 @@
 require('colors');
 
-const { guardarDB } = require('./helpers/guardarArchivo');
+const { guardarDB,leerDB } = require('./helpers/guardarArchivo');
 const { inquirerMenu,
   pausa,
   leerInput
@@ -14,6 +14,14 @@ const main = async () => {
   let opt = '';
   const tareaS = new TareaS()
 
+  const tareasDB = leerDB()
+
+  if(tareasDB){
+    //Estabelecer tareas
+  }
+
+  await pausa();
+
   do {
     //Imprimir el menu
     opt = await inquirerMenu();
@@ -22,20 +30,19 @@ const main = async () => {
         //crear opcion
         const descDeLaTarea = await leerInput('Descripcion: ')
         tareaS.crearTarea(descDeLaTarea);
-        break;
+      break;
+
+
       case '2':
         console.log(tareaS.listadoArr)
-        break;
+      break;
 
 
     }
 
-    guardarDB(tareaS.listadoArr);
-
-
+    //guardarDB(tareaS.listadoArr);
 
     await pausa();
-
 
   } while (opt !== '0');
 
