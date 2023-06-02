@@ -34,7 +34,8 @@ const main = async () => {
 
 
       case '2':
-        console.log(tareaS.listadoArr)
+        //console.log(tareaS.listadoArr)
+        tareaS.listadoCompleto()
       break;
 
 
