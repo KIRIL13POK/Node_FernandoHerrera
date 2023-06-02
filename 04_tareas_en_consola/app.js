@@ -40,7 +40,7 @@ const main = async () => {
 
     }
 
-    //guardarDB(tareaS.listadoArr);
+    guardarDB(tareaS.listadoArr);
 
     await pausa();
 

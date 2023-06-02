@@ -14,6 +14,11 @@ class Tareas {
         return listado;
 
     }
+    constructor(){
+
+        this._listado = {};
+        
+    }
 
     cargarTareasFromArray(tareas = []){
         tareas.forEach( tarea => {
@@ -23,15 +28,13 @@ class Tareas {
         })
     }
 
-    constructor(){
-
-        this._listado = {};
-        
-    }
-
     crearTarea(descDeLaTarea = ''){
         const tarea = new Tarea(descDeLaTarea);
         this._listado[tarea.id] = tarea;
+    }
+
+    listadoCompleto() {
+         
     }
 }
 
