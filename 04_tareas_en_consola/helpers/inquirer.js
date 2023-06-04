@@ -10,7 +10,7 @@ const preguntas = [
         choices: [
             {
                 value: '1',
-                name: `${'1'.red +'. Crear una tarea'}`,
+                name: `${'1'.red + '. Crear una tarea'}`,
             },
             {
                 value: '2',
@@ -18,23 +18,23 @@ const preguntas = [
             },
             {
                 value: '3',
-                name: `${'3'.red +  '. Listar tareas completadas'}`,
+                name: `${'3'.red + '. Listar tareas completadas'}`,
             },
             {
                 value: '4',
-                name: `${'4'.red +  '. Listar tareas pendientes '}`,
+                name: `${'4'.red + '. Listar tareas pendientes '}`,
             },
             {
                 value: '5',
-                name: `${'5'.red +  '. Completar tarea(s) '}`,
+                name: `${'5'.red + '. Completar tarea(s) '}`,
             },
             {
                 value: '6',
-                name: `${'6'.red +  '. Borrar tarea '}`,
+                name: `${'6'.red + '. Borrar tarea '}`,
             },
             {
                 value: '0',
-                name: `${'0'.red +  '. Salir '}`,
+                name: `${'0'.red + '. Salir '}`,
             },
         ]
     }
@@ -48,7 +48,7 @@ const preguntaPausa = [
 
     }
 ]
-     
+
 
 const inquirerMenu = async () => {
 
@@ -59,43 +59,72 @@ const inquirerMenu = async () => {
     console.log('====================================\n'.green)
 
 
-    const {opcion} = await inquirer.prompt(preguntas);
+    const { opcion } = await inquirer.prompt(preguntas);
     return opcion;
 }
 
 
-const pausa = async () =>{
+const pausa = async () => {
     await inquirer.prompt(preguntaPausa);
-   
+
 
 
 }
 
-const leerInput = async (message) =>{
+const leerInput = async (message) => {
 
     const question = [
         {
             type: 'input',
-            name: 'descDeLaTarea',
+            name: 'desc',
             message,
-            validate(value){
-                if(value.length === 0){
+            validate(value) {
+                if (value.length === 0) {
                     //voy a retornar un error=>
                     return 'Por favor ingrese un valor';
                 }
                 return true;
             }
-        } 
+        }
     ];
-    const {descDeLaTarea} = await inquirer.prompt(question);
-    return descDeLaTarea;
+    const { desc } = await inquirer.prompt(question);
+    return desc;
 
 }
+
+const listadoTareasBorrar = async (tareas = []) => {
+    const choices = tareas.map((tarea, i) => {
+
+        const idx =  `${i + 1}.`.green
+        return {
+
+            value: tarea.id,
+            name: `${idx}${tarea.desc}`
+
+        }
+    });
+
+    const preguntas = [
+        {
+            type: 'list',
+            name: 'id',
+            message: 'Borrar',
+            choices
+
+        }
+
+    ]
+    const { id } = await inquirer.prompt(preguntas);
+    return id
+
+}
+
 
 
 module.exports = {
     inquirerMenu,
     pausa,
-    leerInput
+    leerInput,
+    listadoTareasBorrar
 
 }

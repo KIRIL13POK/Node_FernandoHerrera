@@ -1,55 +1,87 @@
 const Tarea = require('./Tarea');
 
-class Tareas {  
+class Tareas {
 
     _listado = {}
 
     get listadoArr() {
         const listado = [];
-        Object.keys( this._listado).forEach( key => {
+        Object.keys(this._listado).forEach(key => {
             const tarea = this._listado[key];
-            listado.push( tarea);
+            listado.push(tarea);
         });
 
         return listado;
 
     }
-    constructor(){
+    constructor() {
 
         this._listado = {};
-        
+
+    }
+    
+    borrarTarea( id = ''){
+        if(this._listado[id]){
+            delete this._listado[id];
+        }
     }
 
-    cargarTareasFromArray(tareas = []){
-        tareas.forEach( tarea => {
-            
+    cargarTareasFromArray(tareas = []) {
+        tareas.forEach(tarea => {
+
             this._listado[tarea.id] = tarea;
 
         })
     }
 
-    crearTarea(descDeLaTarea = ''){
+    crearTarea(descDeLaTarea = '') {
         const tarea = new Tarea(descDeLaTarea);
         this._listado[tarea.id] = tarea;
     }
 
     listadoCompleto() {
         console.log()
-        this.listadoArr.forEach( ( tarea, i) => {
+        this.listadoArr.forEach((tarea, i) => {
 
             const idx = `${i + 1}`.green
-            const { desc, completadoEn} = tarea;
-            const estado = ( completadoEn)
-                            ? 'Completada'.green
-                            : 'Pendiente'.red
-            
-            console.log( `${idx}. ${desc} :: ${estado}.\n`)                
+            const { desc, completadoEn } = tarea;
+            const estado = (completadoEn)
+                ? 'Completada'.green
+                : 'Pendiente'.red
+
+            console.log(`${idx}. ${desc} :: ${estado}.\n`)
 
         })
-         
+
     }
 
+    listaPendientesCompletadas(completadas = true) {
 
+        console.log()
+        let contador = 0;
+        this.listadoArr.forEach((tarea, i) => {
+
+            const { desc, completadoEn } = tarea;
+            const estado = (completadoEn)
+                ? 'Completada'.green
+                : 'Pendiente'.red
+
+
+            if (completadas) {
+                //Mostrar tareas completadas
+                if(completadoEn){
+                    contador += 1;
+                    console.log( `${(contador + '.').green} ${desc} :: ${(estado +'.').red}\n`) 
+                }
+            } else {
+                //Mostrar tareas pendientes
+                if(!completadoEn){
+                    contador += 1;
+                    console.log( `${(contador + '.').green} ${desc} :: ${estado}${'.'.red}\n`) 
+                }
+            }
+        })
+    }
 }
 
 module.exports = Tareas;
