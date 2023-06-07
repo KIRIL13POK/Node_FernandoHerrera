@@ -8,13 +8,26 @@ class Busquedas {
 
     }
 
+    get paramsMapbox(){
+        return {
+            'access_token':'pk.eyJ1Ijoia2lyaWwxM3BvayIsImEiOiJjbGlsdDVicjYwZG9pM2twYzE1bzQ2dTc1In0.0LGZfx-JQ46poOOctJAgTA',
+            'limit': 5,
+            'language':'es'
+         }
+    }
+
     //Método para buscar un lugar
     async ciudad(lugar = '') {
 
         try {
             //Peticion http
-            //console.log('Ciudad:',lugar)
-            const resp = await axios.get('https://api.mapbox.com/geocoding/v5/mapbox.places/MADRID.json?limit=10&proximity=ip&language=es&access_token=pk.eyJ1Ijoia2lyaWwxM3BvayIsImEiOiJjbGlsdDVicjYwZG9pM2twYzE1bzQ2dTc1In0.0LGZfx-JQ46poOOctJAgTA');
+            const instance = axios.create({
+                baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${lugar}.json`,
+                params: this.paramsMapbox
+
+            })
+            const resp =  await instance.get();
+           
             console.log(resp.data);
 
             return []; 
