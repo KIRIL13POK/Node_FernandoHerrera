@@ -5,10 +5,9 @@ const Busquedas = require('./models/busquedas');
 
 
 const main = async () => {
-
+    
     const busquedas = new Busquedas();
     let opt;
-
 
     do {
         //Imprimir el menu
@@ -17,33 +16,28 @@ const main = async () => {
             case 1:
                 //Mostrar mensaje
                 const terminoDeBusqueda = await leerInput('Ciudad:');
-
-                //Buscar los lugares
+                //Buscar los lugares:
                 const lugares = await busquedas.ciudad(terminoDeBusqueda);
-
-                //Seleccionar el lugar
+                //Seleccionar el lugar:
                 const id = await listarLugares(lugares);
-                const lugarSel = lugares.find( l => l.id === id);
-                console.log(lugarSel)
-
-                //Clima
-
-                //Mostrar resultados
-                //Mapbox API=>
-                console.log('\nInformación de la ciudad\n'.green);
-                console.log(`${'Ciudad:'.grey} ${lugarSel.nombre}`)
+                const lugarSel = lugares.find(l => l.id === id);
+                //Clima:
+                const clima = await busquedas.climaLugar(lugarSel.lat, lugarSel.lng);
+                //Mostrar resultados:
+                console.clear();
+                    //Mapbox API=>
+                console.log('\nInformación de la ciudad:\n'.grey);
+                console.log(`${'Ciudad:'.grey} ${lugarSel.nombre.green}`)
                 console.log(`${'Lat:'.grey} ${lugarSel.lat}`)
                 console.log(`${'Lng:'.grey} ${lugarSel.lng}`)
-                
-                console.log('Temperatura:')
-                console.log('Minima:')
-                console.log('Maxima:')
-
+                    //OpenWeatherMap API=>
+                console.log('Temperatura:'.grey, clima.temp)
+                console.log(`${'Minima:'.grey}`, clima.min)
+                console.log(`${'Maxima:'.grey}`, clima.min)
+                console.log('Como está el clima:'.grey, clima.desc.green)
                 break;
 
-
         }
-
 
         if (opt !== 0) await pausa();
 
