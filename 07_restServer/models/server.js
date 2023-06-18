@@ -4,7 +4,8 @@ class Server {
 
     constructor() {
         this.app = express();
-        this.port = 3000
+        //this.port = 8089
+        this.port = process.env.PORT
 
         //Middlewars
         this.middlewares();
@@ -19,12 +20,36 @@ class Server {
     }
 
 
-
     routes() {
-        this.app.get('/', (req, res) => {
-            res.send('Hello Worldsssssssssssss')
+
+        this.app.get('/api', (req, res) => {
+            res.json({
+                msg:'get API'
+            })
         });
+        this.app.put('/api', (req, res) => {
+            res.json({
+                msg:'put API'
+            })
+        });
+        this.app.post('/api', (req, res) => {
+            res.json({
+                msg:'post API'
+            })
+        });
+        this.app.delete('/api', (req, res) => {
+            res.json({
+                msg:'delete API'
+            })
+        });
+        this.app.patch('/api', (req, res) => {
+            res.json({
+                msg:'patch API'
+            })
+        });
+        
     }
+    
     listen() {
         this.app.listen(this.port, () => {
             console.log(`El Servidor esta escuchando en el puero ${this.port}`)
